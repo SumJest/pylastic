@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body class="m-3">
+<%
+variations = variations_elastic_moduli.values()
+%>
+<h4>Average properties</h4>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <th>Averaging scheme</th>
+        % for modulus in average_properties[0]["modules"]:
+        <th>${modulus["name"]}</th>
+        % endfor
+    </tr>
+    % for property in average_properties:
+        <tr>
+            <td>${property["schema"]}</td>
+            % for modulus in property["modules"]:
+            <td>${modulus["symbol"]} = ${f'{modulus["value"]:0.4f}'} ${modulus["unit"]}</td>
+            % endfor
+        </tr>
+    % endfor
+    </tbody>
+</table>
+<h4>Extra properties</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td>
+                A<sup>U</sup>
+            </td>
+            <td>
+                ${f'{au:0.5f}'}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                A<sup>L</sup>(C<sup>V</sup>,C<sup>R</sup>)
+            </td>
+            <td>
+                ${f'{al:0.5f}'}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h4>Eigenvalues of the stiffness matrix</h4>
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        % for _ in eigenvalues_of_the_stiffness_matrix["lambdas"]:
+        <th>&#955;<sub>${loop.index}</sub></th>
+        % endfor
+    </tr>
+    <tr>
+        % for a in eigenvalues_of_the_stiffness_matrix["lambdas"]:
+        <td>${f'{a["value"]:0.5f}'} ${a["unit"]}</td>
+        % endfor
+    </tr>
+
+    </tbody>
+</table>
+<h4>Variations of the elastic moduli</h4>
+% if is_stable:
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <td></td>
+        % for variation in variations:
+
+        <th colspan="2">${variation["name"]}</th>
+        % endfor
+      <th></th>
+    </tr>
+    <tr>
+      <td></td>
+        % for variation in variations:
+            <th>${variation["minimum"]["symbol"]}<sub>min</sub></th>
+            <th>${variation["maximum"]["symbol"]}<sub>max</sub></th>
+        % endfor
+      <th></th>
+    </tr>
+    <tr>
+      <td>Value</td>
+        % for variation in variations:
+            <td>${f'{variation["minimum"]["value"]["value"]:0.3f}'} ${variation["minimum"]["value"]["unit"]}</td>
+            <td>${f'{variation["maximum"]["value"]["value"]:0.3f}'} ${variation["maximum"]["value"]["unit"]}</td>
+        % endfor
+      <td>Value</td>
+    </tr>
+
+    <tr>
+      <td>Anisotropy</td>
+        % for variation in variations:
+            <td colspan="2">${f'{variation["anisotropy"]:0.2f}' if type(variation["anisotropy"]) is not str else variation["anisotropy"]}
+                % if variation['is_isotropy']:
+                    ISOTROPY
+                % endif
+            </td>
+        % endfor
+      <td>Anisotropy</td>
+    </tr>
+
+    <tr>
+      <td>Axis</td>
+        % for variation in variations:
+            <td>
+                % for axis in variation["minimum"]["axes"]:
+
+                    % for coord in axis["vector"]:
+                        ${f'{coord:0.4f}'}<br />
+                    % endfor
+                    <br />
+                % endfor
+            </td>
+            <td>
+                % for axis in variation["maximum"]["axes"]:
+                    % for coord in axis["vector"]:
+                        ${f'{coord:0.4f}'}<br />
+                    % endfor
+                    <br />
+                % endfor
+            </td>
+        % endfor
+      <td>Axis</td>
+    </tr>
+    <tr>
+        <td></td>
+        % for variation in variations:
+            <td>
+                % if variation["minimum"]["second_axis"]:
+                    % for coord in variation["minimum"]["second_axis"]["vector"]:
+                        ${f'{coord:0.4f}'}<br />
+                    % endfor
+                % endif
+            </td>
+            <td>
+                % if variation["maximum"]["second_axis"]:
+                    % for coord in variation["maximum"]["second_axis"]["vector"]:
+                        ${f'{coord:0.4f}'}<br />
+                    % endfor
+                % endif
+            </td>
+        % endfor
+        <td>Second axis</td>
+
+    </tr>
+  </tbody>
+</table>
+% else:
+<div class="card bg-danger text-white w-50">
+  <div class="card-body">
+    Stiffness matrix is not definite positive, crystal is mechanically unstable<br>
+No further analysis will be performed.
+  </div>
+</div>
+% endif
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>

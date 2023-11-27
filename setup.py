@@ -1,7 +1,5 @@
 from setuptools import setup, find_packages
-import pylastic
 
-VERSION = pylastic.__version__
 DESCRIPTION = 'Tensor Analysis Library'
 LONG_DESCRIPTION = 'Library for analyzing the crystal stiffness tensor'
 
@@ -9,7 +7,7 @@ LONG_DESCRIPTION = 'Library for analyzing the crystal stiffness tensor'
 setup(
     # the name must match the folder name 'verysimplemodule'
     name="pylastic",
-    version=VERSION,
+    version='0.1.0',
     author="Roman Fakhrutdinov",
     author_email="<summedjesters@gmail.com>",
     description=DESCRIPTION,

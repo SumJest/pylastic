@@ -1,0 +1,2 @@
+include pylastic/renderer/templates/*.html
+include pylastic/viewer/templates/*.html

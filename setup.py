@@ -16,5 +16,5 @@ setup(
     install_requires=['aiohttp~=3.8.5', 'pydantic~=2.4.2', 'Mako~=1.2.4', 'numpy~=1.26.0', 'scipy~=1.11.2',
                     'requests~=2.31.0', 'plotly~=5.18.0', 'setuptools'],
     include_package_data=True,
-    package_data={'pylastic': ['elater/viewer/templates/*.html', ['elater/renderer/templates/*.html']]}
+    package_data={'pylastic': ['elater/viewer/templates/*.html', 'elater/renderer/templates/*.html']}
 )

@@ -7,7 +7,7 @@ LONG_DESCRIPTION = 'Library for analyzing the crystal stiffness tensor'
 setup(
     # the name must match the folder name 'verysimplemodule'
     name="pylastic",
-    version='0.1.3',
+    version='0.1.4',
     author="Roman Fakhrutdinov",
     author_email="<summedjesters@gmail.com>",
     description=DESCRIPTION,

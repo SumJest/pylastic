@@ -1,2 +1,1 @@
-include pylastic/elater/viewer/templates/*.html
-include pylastic/elater/renderer/templates/*.html
+recursive-include *.html

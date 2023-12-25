@@ -15,6 +15,7 @@ class ElastPars(OUT):
 
     def __init__(self, raw: str):
         super().__init__(raw)
+        self.out_type = 'elastcon'
         tensor = Tensor(raw.encode())
         if not tensor.found:
             raise TensorNotFound('Tensor matrix not found')

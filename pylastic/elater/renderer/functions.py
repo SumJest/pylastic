@@ -8,5 +8,5 @@ class ElasticFunction(enum.Enum):
     LINEAR_INVERSE = 3, "Linear stiffness"
 
     def __init__(self, num, title):
-        self.value = num
+        self.num = num
         self.title = title

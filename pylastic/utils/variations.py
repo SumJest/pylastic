@@ -91,9 +91,9 @@ async def linear(LC: Callable) -> Variation:
     if is_isotropy:
         min_axes = max_axes = []
 
-    minimum = Extremum(symbol="β", value=Value(value=minLC[1], unit="TPa-1"),
+    minimum = Extremum(symbol="β", value=Value(value=minLC[1], unit="TPa⁻¹"),
                        axes=min_axes)
-    maximum = Extremum(symbol="β", value=Value(value=maxLC[1], unit="TPa-1"),
+    maximum = Extremum(symbol="β", value=Value(value=maxLC[1], unit="TPa⁻¹"),
                        axes=max_axes)
 
     variation = Variation(name="Linear compressibility", anisotropy=anisLC, maximum=maximum, minimum=minimum)
@@ -136,8 +136,10 @@ async def get_variations(elas: Elastic) -> VariationsElasticModuli:
     _young_reverse = await young(lambda *args: 1000 / elas.Young(*args))
 
     _young_reverse.name = 'Uniaxial Compressibility'
-    _young_reverse.minimum.value.unit = 'TPa-1'
-    _young_reverse.maximum.value.unit = 'TPa-1'
+    _young_reverse.minimum.value.unit = 'TPa⁻¹'
+    _young_reverse.maximum.value.unit = 'TPa⁻¹'
+    _young_reverse.minimum.symbol = "UC"
+    _young_reverse.maximum.symbol = "UC"
 
     _linear_compressibility = await linear(elas.LC)
 
@@ -153,6 +155,8 @@ async def get_variations(elas: Elastic) -> VariationsElasticModuli:
     _linear_compressibility_reverse.name = 'Linear stiffness'
     _linear_compressibility_reverse.minimum.value.unit = 'GPa'
     _linear_compressibility_reverse.maximum.value.unit = 'GPa'
+    _linear_compressibility_reverse.minimum.symbol = "LS"
+    _linear_compressibility_reverse.maximum.symbol = "LS"
 
     _shear = await shear(elas.shear)
     _poisson_ratio = await poisson(elas.Poisson)

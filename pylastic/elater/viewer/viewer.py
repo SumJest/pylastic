@@ -8,8 +8,9 @@ class Viewer:
     analyzed: Analyzed
     template: str
 
-    def __init__(self, data: Analyzed):
+    def __init__(self, data: Analyzed, title: str = ""):
         self.analyzed = data
+        self.title = title
         self.__read_template()
 
     def __read_template(self):
@@ -18,4 +19,4 @@ class Viewer:
 
     async def render(self):
         template = Template(self.template)
-        return template.render(**self.analyzed.model_dump())
+        return template.render(**self.analyzed.model_dump(), title=self.title)

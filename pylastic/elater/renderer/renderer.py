@@ -101,7 +101,7 @@ class ElasticRender:
             font_family="Courier New",
             title_font=dict(
                 family="Courier New",
-                size=24,
+                size=20,
             )
         )
         return fig.to_html(include_plotlyjs=self.path_to_plotly_js, full_html=self.full_html)

@@ -14,3 +14,7 @@
 
 Пример графика поверхности:
 ![График поверхности](https://i.imgur.com/7b2syAX.png)
+
+## Установка
+
+    pip install pylastic @ git+https://github.com/SumJest/pylastic.git
